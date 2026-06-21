@@ -1,0 +1,11 @@
+url,length,https,label
+google.com,10,1,0
+facebook.com,12,1,0
+amazon.com,10,1,0
+microsoft.com,13,1,0
+github.com,10,1,0
+secure-login-bank.xyz,21,0,1
+verify-account-update.xyz,25,0,1
+fake-bank-security.xyz,22,0,1
+paypal-login-secure.xyz,24,0,1
+account-verification.xyz,24,0,1

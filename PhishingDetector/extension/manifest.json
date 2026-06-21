@@ -1,0 +1,55 @@
+{
+  "manifest_version": 3,
+
+  "name": "Phishing Detector Pro",
+
+  "version": "1.0",
+
+  "description": "AI Powered Phishing Website Detection Extension",
+
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs"
+  ],
+
+  "host_permissions": [
+    "<all_urls>",
+    "http://127.0.0.1:5000/*"
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Phishing Detector Pro"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+
+      "js": [
+        "content.js"
+      ],
+
+      "run_at": "document_end"
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*"
+      ],
+
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}
