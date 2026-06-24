@@ -41,7 +41,8 @@ chrome.runtime.onMessage.addListener(
 
             .catch(error => {
 
-                console.error("Backend Error:", error);
+                
+                console.log("Backend Offline");
 
                 sendResponse({
                     result: "Unable to Connect to Backend",
