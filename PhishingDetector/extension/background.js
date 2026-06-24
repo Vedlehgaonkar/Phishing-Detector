@@ -1,56 +1,64 @@
 chrome.runtime.onMessage.addListener(
-(request, sender, sendResponse) => {
+    (request, sender, sendResponse) => {
 
-    if (request.action === "scan") {
+        if (request.action === "scan") {
 
-        console.log("Request Received:", request);
+            console.log("Request Received:", request);
 
-        fetch("http://127.0.0.1:5000/check", {
+            fetch("http://127.0.0.1:5000/check", {
 
-            method: "POST",
+                method: "POST",
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+                headers: {
+                    "Content-Type": "application/json"
+                },
 
-            body: JSON.stringify({
-                url: request.url,
-                passwordFields: request.passwordFields,
-                externalForms: request.externalForms,
-                credentialHarvesting: request.credentialHarvesting,
-                fakeLoginPage: request.fakeLoginPage
+                body: JSON.stringify({
+                    url: request.url,
+                    passwordFields: request.passwordFields,
+                    externalForms: request.externalForms,
+                    credentialHarvesting: request.credentialHarvesting,
+                    fakeLoginPage: request.fakeLoginPage
+                })
+
             })
 
-        })
+            .then(response => {
 
-        .then(response => {
+                console.log("HTTP Status:", response.status);
 
-            console.log("HTTP Status:", response.status);
+                return response.json();
 
-            return response.json();
+            })
 
-        })
+            .then(data => {
 
-        .then(data => {
+                console.log("Backend Response:", data);
 
-            console.log("Backend Response:", data);
+                sendResponse(data);
 
-            sendResponse(data);
+            })
 
-        })
+            .catch(error => {
 
-        .catch(error => {
+                console.error("Backend Error:", error);
 
-            console.error("Backend Error:", error);
+                sendResponse({
+                    result: "Unable to Connect to Backend",
+                    risk_score: 0,
+                    threat_level: "LOW",
+                    password_fields: 0,
+                    external_forms: 0,
+                    credential_harvesting: false,
+                    fake_login_page: false,
+                    brand_impersonation: false,
+                    suspicious_tld: false
+                });
 
-            sendResponse({
-                result: "Backend Error",
-                risk_score: 0,
-                threat_level: "LOW"
             });
 
-        });
+            return true;
+        }
 
-        return true;
     }
-});
+);
